@@ -1,0 +1,31 @@
+version: '3'  # Specifies the version of Docker Compose being used.
+
+services:  # Defines the services or containers used in the application.
+
+  rest:  # This is a service/container named 'rest'.
+    image: examen-gse-gamix-sr-2122:1  # Specifies the Docker image to use for this service.
+    environment:  # Sets environment variables within the container.
+      NODE_ENV: production  # Environment variable NODE_ENV is set to 'production'.
+    ports:  # Maps container ports to host machine ports.
+      - "3030:3030"  # Maps host port 3030 to container port 3030.
+    networks:  # Specifies the network(s) the container should be attached to.
+      - gamix2122sr  # Connects to the 'gamix2122sr' network.
+    depends_on:  # Specifies that this service depends on another service.
+      - data  # It depends on the 'data' service.
+
+  data:  # This is another service/container named 'data'.
+    image: mongo:5  # Specifies the Docker image for this service (MongoDB version 5).
+    ports:  # Maps container ports to host machine ports.
+      - "3031:3031"  # Maps host port 3031 to container port 3031.
+    networks:  # Specifies the network(s) the container should be attached to.
+      - gamix2122sr  # Connects to the 'gamix2122sr' network.
+    volumes:  # Defines volumes to be mounted within the container.
+      - db:/data/db  # Mounts the 'db' volume to the '/data/db' path inside the container.
+
+networks:  # Defines the networks used in the application.
+
+  gamix2122sr:  # This is a network named 'gamix2122sr'.
+
+volumes:  # Defines volumes to be used by containers.
+
+  db:  # This is a volume named 'db'.
